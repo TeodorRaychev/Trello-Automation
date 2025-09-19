@@ -37,5 +37,5 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           name: Docker TestNG Results
-          path: surefire-reports/testng-results.xml
+          path: surefire-reports/TEST-*.xml
           reporter: java-junit
