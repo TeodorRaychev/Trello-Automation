@@ -28,14 +28,15 @@ jobs:
         run: docker build -t api-tests .
 
       - name: Run Tests in Docker Container
-        run: docker run --name api-tests-run api-tests
-
-      - name: Copy Reports from Container
-        if: always()
         run: |
           docker run --name api-tests-run \
           -e SUITE_FILE=${{ github.event.inputs.suite }} \
           api-tests
+
+      - name: Copy Reports from Container
+        if: always()
+        run: |
+          docker cp api-tests-run:/app/target/surefire-reports ./surefire-reports
 
       - name: Upload Test Reports
         if: always()
