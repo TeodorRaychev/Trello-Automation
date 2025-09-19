@@ -2,6 +2,16 @@ name: Run API Tests in Docker
 
 on:
   workflow_dispatch:
+    inputs:
+      suite:
+        description: "Which TestNG suite to run"
+        required: true
+        default: "full_suite.xml"
+        type: choice
+        options:
+          - full_suite.xml
+          - board_suite.xml
+          - card_suite.xml
   push:
     branches:
       - main
@@ -23,7 +33,9 @@ jobs:
       - name: Copy Reports from Container
         if: always()
         run: |
-          docker cp api-tests-run:/app/target/surefire-reports ./surefire-reports
+          docker run --name api-tests-run \
+          -e SUITE_FILE=${{ github.event.inputs.suite }} \
+          api-tests
 
       - name: Upload Test Reports
         if: always()
