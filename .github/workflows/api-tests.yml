@@ -30,7 +30,7 @@ jobs:
       - name: Run Tests in Docker Container
         run: |
           docker run --name api-tests-run \
-          -e SUITE_FILE=${{ github.event.inputs.suite }} \
+          -e SUITE_FILE=${{ github.event.inputs.suite || 'full_suite.xml' }} \
           api-tests
 
       - name: Copy Reports from Container
