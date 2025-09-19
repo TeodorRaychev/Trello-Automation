@@ -34,7 +34,7 @@ jobs:
 
       - name: Publish Test Results in GitHub UI
         if: always()
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v2
         with:
           name: Docker TestNG Results
           path: surefire-reports/TEST-*.xml
