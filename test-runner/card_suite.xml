@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Trello API Automation">
+    <test name="Trello Cards API Test">
+        <classes>
+            <class name="com.trello.api.CardWorkflowTest"/>
+        </classes>
+    </test>
+</suite>

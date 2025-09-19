@@ -1,0 +1,41 @@
+name: Run API Tests in Docker
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        run: docker build -t api-tests .
+
+      - name: Run Tests in Docker Container
+        run: docker run --name api-tests-run api-tests
+
+      - name: Copy Reports from Container
+        if: always()
+        run: |
+          docker cp api-tests-run:/app/target/surefire-reports ./surefire-reports
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: surefire-reports
+          path: surefire-reports/
+
+      - name: Publish Test Results in GitHub UI
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Docker TestNG Results
+          path: surefire-reports/testng-results.xml
+          reporter: java-testng
