@@ -38,4 +38,4 @@ jobs:
         with:
           name: Docker TestNG Results
           path: surefire-reports/testng-results.xml
-          reporter: java-testng
+          reporter: java-surefire
