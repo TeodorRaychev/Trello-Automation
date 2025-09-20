@@ -22,7 +22,8 @@ public class CardWorkflowTest extends BaseTest {
     public void test_createCard() {
         final String cardName = "Prepare Interview Task";
         assert boardId != null : "Board ID is null";
-        assert listMap.size() == values().length : "List Map size does not match Status values";
+        assert listMap.size() == values().length : MessageFormat.format("List Map size [{0}] " +
+                "does not match Status values size [{1}]", listMap.size(), values().length);
         String listId = listMap.get(TODO.getStatus());
         assert listId != null : "List ID is null";
         Response response = card.createCard(cardName, listId);
@@ -51,8 +52,9 @@ public class CardWorkflowTest extends BaseTest {
     public void test_addCardComment() {
         assert cardId != null : "Card ID is null";
         Response response = card.addCardComment(cardId, comment);
-        assert response.body().jsonPath().getString("data.text").equals(comment) : "Card comment " +
-                "text does not match";
+        String cardComment = response.body().jsonPath().getString("data.text");
+        assert cardComment.equals(comment) : MessageFormat.format("Card comment: [{0}] does not match expected " +
+                "comment: [{1}]", cardComment, comment);
     }
 
     @Test(dependsOnMethods = "test_addCardComment", groups = {CREATE_CARD})

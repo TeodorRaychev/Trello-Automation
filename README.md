@@ -57,6 +57,6 @@ API automation framework built using RestAssured, TestNG, and Maven
 - Request/Response logging
     - Log level can be set in the config.properties file for more detailed logging [java.util.
       logging]  
-    - Log levels [SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST]
+    - Log levels [SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST] *in use: FINE, INFO* 
 - Dockerized
 - CI/CD pipeline [GitHub actions] with results displayed in the GitHub UI
