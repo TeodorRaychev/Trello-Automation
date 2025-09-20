@@ -9,13 +9,11 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import static com.trello.util.ConfigLoader.loadConfig;
+import static com.trello.util.ConfigLoader.setLogLevel;
 import static io.restassured.RestAssured.given;
 
 public class BasePage {
@@ -103,21 +101,5 @@ public class BasePage {
 
     JsonObject getAuthenticatedJsonObject() {
         return JsonParser.parseString(autheticatedJsonObject.toString()).getAsJsonObject();
-    }
-
-    public static void setLogLevel(Logger logger, Level level) {
-        logger.setLevel(level);
-        Handler[] handlers = logger.getHandlers();
-        if (handlers.length == 0) {
-            ConsoleHandler consoleHandler = new ConsoleHandler();
-            consoleHandler.setLevel(level);
-            consoleHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(consoleHandler);
-        } else {
-            for (Handler handler : handlers) {
-                handler.setLevel(level);
-            }
-        }
-        logger.setUseParentHandlers(false);
     }
 }

@@ -17,7 +17,7 @@ API automation framework built using RestAssured, TestNG, and Maven
 
 ### Prerequisites
 
-- Java 11+ & Maven  
+- Java & Maven  
   or
 - Docker
 
@@ -55,6 +55,8 @@ API automation framework built using RestAssured, TestNG, and Maven
 
 - Environment configuration via config.properties
 - Request/Response logging
-    - Log level can be set in the config.properties file for more detailed logging
+    - Log level can be set in the config.properties file for more detailed logging [java.util.
+      logging]  
+    - Log levels [SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST]
 - Dockerized
-- CI/CD pipeline
+- CI/CD pipeline [GitHub actions] with results displayed in the GitHub UI

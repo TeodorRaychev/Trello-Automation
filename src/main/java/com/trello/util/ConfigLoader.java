@@ -3,7 +3,11 @@ package com.trello.util;
 import java.io.FileInputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,10 +27,18 @@ public class ConfigLoader {
         Properties resolvedProps = new Properties();
         for (String key : props.stringPropertyNames()) {
             String rawValue = props.getProperty(key);
-            String resolvedValue = resolveEnvVars(rawValue);
+            String resolvedValue = resolveEnvVars(stripComment(rawValue));
             resolvedProps.setProperty(key, resolvedValue);
         }
         return resolvedProps;
+    }
+
+    public static String stripComment(String line) {
+        int commentIndex = line.indexOf('#');
+        if (commentIndex >= 0) {
+            return line.substring(0, commentIndex).trim();
+        }
+        return line.trim();
     }
 
     private static String resolveEnvVars(String value) {
@@ -44,5 +56,21 @@ public class ConfigLoader {
 
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    public static void setLogLevel(Logger logger, Level level) {
+        logger.setLevel(level);
+        Handler[] handlers = logger.getHandlers();
+        if (handlers.length == 0) {
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler.setLevel(level);
+            consoleHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(consoleHandler);
+        } else {
+            for (Handler handler : handlers) {
+                handler.setLevel(level);
+            }
+        }
+        logger.setUseParentHandlers(false);
     }
 }

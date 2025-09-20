@@ -12,6 +12,19 @@ on:
           - full_suite.xml
           - board_suite.xml
           - card_suite.xml
+      logLevel:
+        description: "Log level for the tests"
+        required: true
+        default: "FINE"
+        type: choice
+        options:
+          - SEVERE
+          - WARNING
+          - INFO
+          - CONFIG
+          - FINE
+          - FINER
+          - FINEST
   push:
     branches:
       - main
@@ -31,6 +44,7 @@ jobs:
         run: |
           docker run --name api-tests-run \
           -e SUITE_FILE=${{ github.event.inputs.suite || 'full_suite.xml' }} \
+          -e LOG_LEVEL=${{ github.event.inputs.logLevel || 'FINE' }} \
           api-tests
 
       - name: Copy Reports from Container
