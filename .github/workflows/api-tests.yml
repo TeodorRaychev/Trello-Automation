@@ -25,6 +25,11 @@ on:
           - FINE
           - FINER
           - FINEST
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
   push:
     branches:
       - main
